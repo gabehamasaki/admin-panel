@@ -20,7 +20,8 @@ class SuperUserSeeder extends Seeder
             'password' => bcrypt($password),
         ])->assignRole('superadmin');
 
-        print('Admin password: ' . $password);
-        print('\n');
+        echo("----------------------------------\n");
+        echo('Admin password: ' . $password);
+        echo("\n");
     }
 }
