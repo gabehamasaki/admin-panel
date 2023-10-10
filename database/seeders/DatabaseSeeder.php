@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->callSilent([
             RolesSeeder::class,
             SuperUserSeeder::class,
-            UserSeeder::class
         ]);
     }
 }
