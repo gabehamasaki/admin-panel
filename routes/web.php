@@ -31,7 +31,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function() {
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/dashboard/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/dashboard/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/dashboard/users', [UserController::class, 'store'])->name('users.store');
+    Route::delete('/dashboard/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 });
 
 Route::middleware('auth')->group(function () {
