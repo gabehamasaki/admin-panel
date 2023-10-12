@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules;
 
 class CreateUserRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class CreateUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->hasRole('superadmin');
     }
 
     /**
@@ -26,7 +27,7 @@ class CreateUserRequest extends FormRequest
         return [
             'name' => ['string', 'max:255'],
             'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
-            'password' => ['string', 'min:5','max:255']
+            'password' => ['string', Rules\Password::defaults()]
         ];
     }
 }
