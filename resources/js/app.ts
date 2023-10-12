@@ -8,8 +8,6 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
 import PrimeVue from "primevue/config";
 import Tailwind from "primevue/passthrough/tailwind";
-
-import LaravelPermissionToVueJS from 'laravel-permission-to-vuejs'
 import ToastService from 'primevue/toastservice';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
@@ -23,7 +21,6 @@ createInertiaApp({
             .use(ZiggyVue, Ziggy)
             .use(PrimeVue, { unstyled: true, pt: Tailwind })
             .use(ToastService)
-            .use(LaravelPermissionToVueJS)
             .mount(el);
     },
     progress: {

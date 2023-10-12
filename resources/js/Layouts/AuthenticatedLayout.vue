@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" >
 import { ref } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
@@ -34,7 +34,7 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink v-if="is('superadmin')" :href="route('users.index')" :active="route().current('users.index')">
+                                <NavLink v-if="$page.props.auth.user.roles.includes('superadmin')" :href="route('users.index')" :active="route().current('users.index')">
                                     Users
                                 </NavLink>
                             </div>
@@ -120,7 +120,7 @@ const showingNavigationDropdown = ref(false);
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink v-if="is('superadmin')" :href="route('users.index')" :active="route().current('dashboard')">
+                        <ResponsiveNavLink v-if="$page.props.auth.user.roles.includes('superadmin')" :href="route('users.index')" :active="route().current('dashboard')">
                             Users
                         </ResponsiveNavLink>
                     </div>

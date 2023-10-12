@@ -6,6 +6,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
 import PrimeVue from "primevue/config";
+import ToastService from 'primevue/toastservice';
 import Tailwind from "primevue/passthrough/tailwind";
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
@@ -25,7 +26,8 @@ createServer((page) =>
                     // @ts-expect-error
                     location: new URL(page.props.ziggy.location),
                 })
-                .use(PrimeVue, { unstyled: true, pt: Tailwind });
+                .use(PrimeVue, { unstyled: true, pt: Tailwind })
+                .use(ToastService)
         },
     })
 );
