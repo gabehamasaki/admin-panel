@@ -3,7 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputText from 'primevue/inputtext';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, router, useForm } from '@inertiajs/vue3';
 import Button from 'primevue/button';
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
@@ -43,7 +43,7 @@ defineProps<{}>();
         <template #header>
             <div class="flex items-center justify-between w-full">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Create User</h2>
-                <a :href="route('users.index')" class="text-gray-800 dark:text-gray-200 hover:underline">Back</a>
+                <Button label="Back" class="mr-2" size="small" @click="router.get(route('users.index'))"/>
             </div>
         </template>
 

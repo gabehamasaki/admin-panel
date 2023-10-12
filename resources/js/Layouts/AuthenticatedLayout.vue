@@ -13,34 +13,37 @@ const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
-    <div>
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <nav class="bg-white border-b border-gray-100 dark:bg-gray-800 dark:border-gray-700">
+    <div class="flex">
+        <Toast position="top-center" />
+        <aside class="w-[390px] p-4 hidden lg:flex flex-col gap-8 min-h-screen bg-white border-r gray-100 dark:bg-gray-800 dark:border-gray-700">
+            <!-- Logo -->
+            <div class="flex items-center w-full ">
+                <Link :href="route('dashboard')" class="flex items-center justify-between w-full">
+                    <ApplicationLogo
+                        class="w-auto text-gray-800 fill-current h-9 dark:text-gray-200"
+                     />
+                    <span class="text-xl font-bold text-gray-800 dark:text-gray-200">Admin</span>
+                    <div></div>
+                </Link>
+            </div>
+            <nav class="w-full">
+                <div class="flex-col hidden gap-4 lg:flex">
+                    <NavLink  class="w-full" :href="route('dashboard')" :active="route().current('dashboard')">
+                        Dashboard
+                    </NavLink>
+                    <NavLink class="w-full" v-if="$page.props.auth.user.roles.includes('superadmin')" :href="route('users.index')" :active="route().current('users.index')">
+                        Users
+                    </NavLink>
+                </div>
+            </nav>
+        </aside>
+        <div class="w-full min-h-screen bg-gray-100 dark:bg-gray-900">
+            <nav class="bg-white border-b border-gray-100 dark:bg-gray-800 dark:border-gray-700 ">
                 <!-- Primary Navigation Menu -->
                 <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
-                        <div class="flex">
-                            <!-- Logo -->
-                            <div class="flex items-center shrink-0">
-                                <Link :href="route('dashboard')">
-                                    <ApplicationLogo
-                                        class="block w-auto text-gray-800 fill-current h-9 dark:text-gray-200"
-                                    />
-                                </Link>
-                            </div>
-
-                            <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
-                                </NavLink>
-                                <NavLink v-if="$page.props.auth.user.roles.includes('superadmin')" :href="route('users.index')" :active="route().current('users.index')">
-                                    Users
-                                </NavLink>
-                            </div>
-                        </div>
-
-                        <div class="hidden sm:flex sm:items-center sm:ml-6">
+                        <div></div>
+                        <div class="hidden lg:flex sm:items-center sm:ml-6">
                             <!-- Settings Dropdown -->
                             <div class="relative ml-3">
                                 <Dropdown align="right" width="48">
@@ -78,8 +81,16 @@ const showingNavigationDropdown = ref(false);
                             </div>
                         </div>
 
+                        <div class="flex items-center w-full lg:hidden">
+                            <Link :href="route('dashboard')" class="flex items-center justify-between">
+                                <ApplicationLogo
+                                    class="w-auto text-gray-800 fill-current h-9 dark:text-gray-200"
+                                />
+                            </Link>
+                        </div>
+
                         <!-- Hamburger -->
-                        <div class="flex items-center -mr-2 sm:hidden">
+                        <div class="flex items-center -mr-2 lg:hidden">
                             <button
                                 @click="showingNavigationDropdown = !showingNavigationDropdown"
                                 class="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400"
@@ -114,13 +125,13 @@ const showingNavigationDropdown = ref(false);
                 <!-- Responsive Navigation Menu -->
                 <div
                     :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
-                    class="sm:hidden"
+                    class="lg:hidden"
                 >
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink v-if="$page.props.auth.user.roles.includes('superadmin')" :href="route('users.index')" :active="route().current('dashboard')">
+                        <ResponsiveNavLink v-if="$page.props.auth.user.roles.includes('superadmin')" :href="route('users.index')" :active="route().current('users.index')">
                             Users
                         </ResponsiveNavLink>
                     </div>
@@ -149,8 +160,6 @@ const showingNavigationDropdown = ref(false);
                     <slot name="header" />
                 </div>
             </header>
-
-            <Toast />
 
             <!-- Page Content -->
             <main>
