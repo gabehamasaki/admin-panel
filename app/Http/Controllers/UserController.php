@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
-use App\Http\Requests\DestroyUserRequest;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -41,17 +39,9 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-        ]);
+        ])->assignRole('user');
 
         return redirect()->route('users.index');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
     }
 
     /**
@@ -59,7 +49,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return Inertia::render('Users/Edit', [
+            'user' => $user
+        ]);
     }
 
     /**
@@ -67,7 +59,28 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $validated = $request->validate(
+            [
+                'name' => ['nullable', 'string', 'max:255'],
+                'email' => ['nullable', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
+                'password' => ['nullable', 'string', 'min:5','max:255']
+            ]
+        );
+
+
+        if ($validated['name']) {
+            $user->name = $validated['name'];
+        }
+        if ($validated['email'] && $validated['email'] != $user->email) {
+            $user->email = $validated['email'];
+        }
+        if ($validated['password']) {
+            $user->password = bcrypt($validated['password']);
+        }
+
+        $user->save();
+
+        return redirect()->route('users.index');
     }
 
     /**

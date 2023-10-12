@@ -59,9 +59,26 @@ defineProps<{
                 <div class="overflow-hidden sm:rounded-lg">
                     <Toolbar class="mb-4">
                         <template #end>
-                            <Button label="New" severity="success" class="mr-2" size="small" @click="router.get(route('users.create'))"/>
-                            <Button label="Edit" severity="info" class="mr-2" size="small" :disabled="!selectedUser"/>
-                            <Button label="Delete" severity="danger" size="small" @click="confirmDeleteUser" :disabled="!selectedUser" />
+                            <Button
+                                label="New"
+                                severity="success"
+                                class="mr-2"
+                                size="small"
+                                @click="router.get(route('users.create'))"
+                            />
+                            <Button
+                                label="Edit" severity="info"
+                                class="mr-2" size="small"
+                                :disabled="!selectedUser"
+                                @click="router.get(route('users.edit', selectedUser?.id))"
+                            />
+                            <Button
+                                label="Delete"
+                                severity="danger"
+                                size="small"
+                                @click="confirmDeleteUser"
+                                :disabled="!selectedUser"
+                            />
                         </template>
                     </Toolbar>
                     <DataTable v-if="users.length > 0" :value="users" ref="dt" dataKey="id" v-model:selection="selectedUser"

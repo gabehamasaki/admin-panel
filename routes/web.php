@@ -33,6 +33,8 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function() {
     Route::get('/dashboard/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/dashboard/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::get('/dashboard/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::patch('/dashboard/users/{user}/edit', [UserController::class, 'update'])->name('users.update');
     Route::post('/dashboard/users', [UserController::class, 'store'])->name('users.store');
     Route::delete('/dashboard/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 });
